@@ -31,7 +31,7 @@ const users = `create table if not exists users(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     pass VARCHAR(100) NOT NULL,
-    avater VARCHAR(100) NOT NULL,
+    avator VARCHAR(100) NOT NULL,
     moment VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
  );`
@@ -50,7 +50,7 @@ const users = `create table if not exists users(
      PRIMARY KEY (id)
  );`
 
- const createTable = (sql) => {
+ const createTable = sql => {
      return query(sql,[])
  }
 
@@ -64,8 +64,15 @@ const insertData = value => {
     return query(_sql, value);
 } 
 
+// 查找用户
+const findUserData = name => {
+    let _sql = `select * from users where name="${name}"`;
+    return query(_sql);
+}
+
 module.exports = {
     query,
 	createTable,
-	insertData
+    insertData,
+    findUserData
 }

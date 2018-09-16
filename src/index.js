@@ -1,9 +1,9 @@
 const Koa = require('koa');
 const path = require('path');
 const bodyParser = require('koa-bodyparser');
-// const ejs = require('ejs');
-// const session = require('koa-generic-session');
-// const MysqlStore = require('koa-mysql-session');
+const ejs = require('ejs');
+const session = require('koa-session-minimal');
+const MysqlStore = require('koa-mysql-session');
 const config = require('./config/default');
 const signup = require('./routers/signup');
 const views = require('koa-views');
@@ -12,23 +12,18 @@ const staticCache = require('koa-static-cache');
 const app = new Koa();
 
 // session存储配置
-const THIRTY_MINTUES = 30 * 60 * 1000;
 const sessionMysqlConfig = {
     user: config.database.USERNAME,
     password: config.database.PASSWORD,
     database: config.database.DATABASE,
-    host: config.database.HOST
-}
-app.keys = ['USER_SID']
+    host: config.database.HOST,
+  }
 
 // 配置session中间件
-// app.use(session({
-//     store: new MysqlStore(sessionMysqlConfig),
-//     rolling: true,
-//     cookie: {
-//         maxage: THIRTY_MINTUES
-//     }
-// }))
+app.use(session({
+    key: 'USER_SID',
+    store: new MysqlStore(sessionMysqlConfig)
+  }))
 
 // 静态资源
 
