@@ -7,6 +7,8 @@ const MysqlStore = require('koa-mysql-session');
 const config = require('./config/default');
 const signup = require('./routers/signup');
 const signin = require('./routers/signin');
+const posts = require('./routers/posts');
+const signout = require('./routers/signout');
 const views = require('koa-views');
 const staticCache = require('koa-static-cache');
 
@@ -51,6 +53,8 @@ app.use(bodyParser({
 
 app.use(signup.routes(), signup.allowedMethods());
 app.use(signin.routes(),signin.allowedMethods());
+app.use(posts.routes(), posts.allowedMethods());
+app.use(signout.routes(), signout.allowedMethods());
 
   // 路由
 // 启动服务

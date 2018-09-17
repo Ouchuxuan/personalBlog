@@ -50,6 +50,16 @@ const users = `create table if not exists users(
      PRIMARY KEY (id)
  );`
 
+ const comment = `create table if not exists comment(
+     id INT NOT NULL AUTO_INCREMENT,
+     name VARCHAR(100) NOT NULL,
+     content TEXT(0) NOT NULL,
+     moment VARCHAR(40) NOT NULL,
+     postid VARCHAR(40) NOT NULL,
+     avator VARCHAR(100) NOT NULL,
+     PRIMARY KEY (id)
+ );`
+
  const createTable = sql => {
      return query(sql,[])
  }
@@ -57,6 +67,7 @@ const users = `create table if not exists users(
  // 建表
 createTable(users)
 createTable(posts)
+createTable(comment)
 
 // 注册用户
 const insertData = value => {
@@ -76,10 +87,34 @@ const findDataByName = name => {
     return query(_sql);
 }
 
+// 查询个人文章分页
+const findPostByUserPage = (name, page) => {
+    const _sql = `select * from posts where name="${name}" order by id desc limit ${(page-1)*10},10;`;
+    return query(_sql, values)
+}
+
+// 查询所有文章
+const findAllPost = ()=>{
+    const _sql = `select * from posts`;
+    return query(_sql);
+}
+
+// 查询分页文章
+const findPostByPage = page => {
+    const _sql = `select * from posts limit ${(page-1)*10},10`;
+    return query(_sql);
+}
+
+
+
+
 module.exports = {
     query,
 	createTable,
     insertData,
     findUserData,
-    findDataByName
+    findDataByName,
+    findPostByUserPage,
+    findAllPost,
+    findPostByPage
 }
