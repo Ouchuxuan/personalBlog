@@ -9,7 +9,7 @@ const path = require('path');
 
 // 注册页面
 router.get('/signup', async (ctx, next) => {
-    // await checkNotLogin(ctx)
+    await checkNotLogin(ctx)
     await ctx.render('signup', {
         session: ctx.session,
     })
@@ -31,7 +31,6 @@ router.post('/signup', async (ctx, next) => {
     };
     await userModel.findUserData(user.name)
     .then(async result => {
-        console.log(result);
         if(result.length){
             try{
                 throw Error('用户已经存在')
@@ -58,14 +57,12 @@ router.post('/signup', async (ctx, next) => {
                         reject(false);
                     };
                     resolve(true);
-                    console.log('头像上传成功');
                 });
             });
 
             if(upload){
                 await userModel.insertData([user.name, md5(user.password),getName, moment().format('YYYY-MM-DD HH:mm:ss')])
                 .then(res => {
-                    console.log('注册成功',res);
                     // 注册成功
                     ctx.body = {
                         data:3

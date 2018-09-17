@@ -70,9 +70,16 @@ const findUserData = name => {
     return query(_sql);
 }
 
+// 通过名字查找用户
+const findDataByName = name => {
+    let _sql = `select * from users where name="${name}"`;
+    return query(_sql);
+}
+
 module.exports = {
     query,
 	createTable,
     insertData,
-    findUserData
+    findUserData,
+    findDataByName
 }

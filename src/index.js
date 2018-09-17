@@ -6,6 +6,7 @@ const session = require('koa-session-minimal');
 const MysqlStore = require('koa-mysql-session');
 const config = require('./config/default');
 const signup = require('./routers/signup');
+const signin = require('./routers/signin');
 const views = require('koa-views');
 const staticCache = require('koa-static-cache');
 
@@ -48,12 +49,8 @@ app.use(bodyParser({
 }))
 
 
-
-// test
-// app.use((ctx) => {
-//     ctx.body = `卡电视剧发神7777经`
-// })
 app.use(signup.routes(), signup.allowedMethods());
+app.use(signin.routes(),signin.allowedMethods());
 
   // 路由
 // 启动服务
