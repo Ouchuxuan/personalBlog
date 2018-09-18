@@ -104,6 +104,11 @@ const findPostByPage = page => {
     const _sql = `select * from posts limit ${(page-1)*10},10`;
     return query(_sql);
 }
+// 发表文章
+const insertPost = value => {
+    let _sql = `insert into posts set name=?,title=?,content=?,md=?,uid=?,moment=?,avator=?`;
+    return query(_sql,value);
+}
 
 
 
@@ -116,5 +121,6 @@ module.exports = {
     findDataByName,
     findPostByUserPage,
     findAllPost,
-    findPostByPage
+    findPostByPage,
+    insertPost
 }
