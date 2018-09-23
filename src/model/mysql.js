@@ -2,22 +2,22 @@ const mysql = require('mysql');
 const config = require('../config/default');
 
 const pool = mysql.createPool({
-    host     : config.database.HOST,
-    user     : config.database.USERNAME,
-    password : config.database.PASSWORD,
-    database : config.database.DATABASE
+    host: config.database.HOST,
+    user: config.database.USERNAME,
+    password: config.database.PASSWORD,
+    database: config.database.DATABASE
 })
 
 const query = (sql, values) => {
     return new Promise((resolve, reject) => {
         pool.getConnection(async (err, connection) => {
-            if(err){
+            if (err) {
                 reject(err)
-            }else{
+            } else {
                 await connection.query(sql, values, (err, rows) => {
-                    if(err){
+                    if (err) {
                         reject(err);
-                    }else{
+                    } else {
                         resolve(rows)
                     }
                 })
@@ -36,7 +36,7 @@ const users = `create table if not exists users(
     PRIMARY KEY (id)
  );`
 
- const posts = `create table if not exists posts(
+const posts = `create table if not exists posts(
      id INT NOT NULL AUTO_INCREMENT,
      name VARCHAR(100) NOT NULL,
      title TEXT(0) NOT NULL,
@@ -50,7 +50,7 @@ const users = `create table if not exists users(
      PRIMARY KEY (id)
  );`
 
- const comment = `create table if not exists comment(
+const comment = `create table if not exists comment(
      id INT NOT NULL AUTO_INCREMENT,
      name VARCHAR(100) NOT NULL,
      content TEXT(0) NOT NULL,
@@ -60,20 +60,20 @@ const users = `create table if not exists users(
      PRIMARY KEY (id)
  );`
 
- const createTable = sql => {
-     return query(sql,[])
- }
+const createTable = sql => {
+    return query(sql, [])
+}
 
- // 建表
+// 建表
 createTable(users)
 createTable(posts)
 createTable(comment)
 
 // 注册用户
 const insertData = value => {
-    const _sql =  `insert into users set name=?,pass=?,avator=?,moment=?`;
+    const _sql = `insert into users set name=?,pass=?,avator=?,moment=?`;
     return query(_sql, value);
-} 
+}
 
 // 查找用户
 const findUserData = name => {
@@ -94,7 +94,7 @@ const findPostByUserPage = (name, page) => {
 }
 
 // 查询所有文章
-const findAllPost = ()=>{
+const findAllPost = () => {
     const _sql = `select * from posts`;
     return query(_sql);
 }
@@ -113,14 +113,14 @@ const findPostByPage = page => {
 // 发表文章
 const insertPost = value => {
     const _sql = `insert into posts set name=?,title=?,content=?,md=?,uid=?,moment=?,avator=?`;
-    return query(_sql,value);
+    return query(_sql, value);
 }
 
 // 更新修改文章
-let updatePost = function(values){
+let updatePost = function (values) {
     let _sql = `update posts set  title=?,content=?,md=? where id=?`
-    return query(_sql,values)
-  }
+    return query(_sql, values)
+}
 // 更新文章浏览数
 const updatePostPv = value => {
     const _sql = `update posts set pv=? where id=?`;
@@ -153,7 +153,7 @@ const updatePostComment = value => {
 
 // 删除评论
 const deleteComment = id => {
-    const _sql =`delete from comment where id=${id}`;
+    const _sql = `delete from comment where id=${id}`;
     return query(_sql);
 }
 
@@ -161,10 +161,10 @@ const deleteComment = id => {
 const deleteAllPostComment = id => {
     const _sql = `delete from comment where postid = ${id}`;
     return query(_sql);
-} 
+}
 
 // 查找评论数
-const findCommentLength = id =>{
+const findCommentLength = id => {
     const _sql = `select * from comment where postid in(select id form posts where id=${id});`;
     return query(_sql);
 }
@@ -176,12 +176,18 @@ const findPageById = page => {
     return query(_sql);
 }
 
+// 删除文章
+const deletePost = id => {
+    const _sql = `delete from posts where id = ${id}`
+    return query(_sql)
+}
+
 
 
 
 module.exports = {
     query,
-	createTable,
+    createTable,
     insertData,
     findUserData,
     findDataByName,
@@ -199,5 +205,6 @@ module.exports = {
     deleteAllPostComment,
     findCommentLength,
     findPageById,
-    updatePost
+    updatePost,
+    deletePost
 }
