@@ -90,12 +90,18 @@ const findDataByName = name => {
 // 查询个人文章分页
 const findPostByUserPage = (name, page) => {
     const _sql = `select * from posts where name="${name}" order by id desc limit ${(page-1)*10},10;`;
-    return query(_sql, values)
+    return query(_sql)
 }
 
 // 查询所有文章
 const findAllPost = ()=>{
     const _sql = `select * from posts`;
+    return query(_sql);
+}
+
+// 通过文章id查找
+const findDataById = id => {
+    const _sql = `select * from posts where id="${id}"`;
     return query(_sql);
 }
 
@@ -106,8 +112,68 @@ const findPostByPage = page => {
 }
 // 发表文章
 const insertPost = value => {
-    let _sql = `insert into posts set name=?,title=?,content=?,md=?,uid=?,moment=?,avator=?`;
+    const _sql = `insert into posts set name=?,title=?,content=?,md=?,uid=?,moment=?,avator=?`;
     return query(_sql,value);
+}
+
+// 更新修改文章
+let updatePost = function(values){
+    let _sql = `update posts set  title=?,content=?,md=? where id=?`
+    return query(_sql,values)
+  }
+// 更新文章浏览数
+const updatePostPv = value => {
+    const _sql = `update posts set pv=? where id=?`;
+    return query(_sql, value);
+}
+// 评论分页
+const findCommentByPage = (page, postId) => {
+    const _sql = `select * from comment where postid=${postId} order by id desc limit ${(page-1)*10},10;`;
+    return query(_sql);
+}
+
+//通过评论id查找
+const findCommentById = id => {
+    const _sql = `select * from comment where postid="${id}"`;
+    return query(_sql);
+}
+
+// 发表评论
+const insertComment = value => {
+    const _sql = `insert into comment set name =?, content =?,moment=?,postid=?,avator=?;`;
+    return query(_sql, value);
+
+}
+
+// 更新文章评论数
+const updatePostComment = value => {
+    const _sql = `update posts set comments=? where id=?`;
+    return query(_sql, value);
+}
+
+// 删除评论
+const deleteComment = id => {
+    const _sql =`delete from comment where id=${id}`;
+    return query(_sql);
+}
+
+// 删除所有评论
+const deleteAllPostComment = id => {
+    const _sql = `delete from comment where postid = ${id}`;
+    return query(_sql);
+} 
+
+// 查找评论数
+const findCommentLength = id =>{
+    const _sql = `select * from comment where postid in(select id form posts where id=${id});`;
+    return query(_sql);
+}
+
+
+// 滚动加载无限数据
+const findPageById = page => {
+    const _sql = `select * from posts limit ${(page-1)*5},5`;
+    return query(_sql);
 }
 
 
@@ -122,5 +188,16 @@ module.exports = {
     findPostByUserPage,
     findAllPost,
     findPostByPage,
-    insertPost
+    insertPost,
+    findDataById,
+    updatePostPv,
+    findCommentByPage,
+    findCommentById,
+    insertComment,
+    updatePostComment,
+    deleteComment,
+    deleteAllPostComment,
+    findCommentLength,
+    findPageById,
+    updatePost
 }
