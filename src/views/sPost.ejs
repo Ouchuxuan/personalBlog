@@ -3,9 +3,10 @@
         <ul class="posts spost">
             <li>
                 <div class="author">
-                    <span title="<%= posts.name %>"><a href="/posts?author=<%= posts.name %> ">author: <%= posts.name %></a></span>
+                    <span title="<%= posts.name %>"><a href="/posts?author=<%= posts.name %> ">作者: <%= posts.name %></a></span>
                     <span>评论数：<%= posts.comments %></span>
                     <span>浏览量：<%= posts.pv %></span>
+                    <span>点赞数：<%= statCount %></span>
                 </div>
                 <div class="comment_pv">
                     <span><%= posts.moment %></span>
@@ -23,6 +24,7 @@
                     <% if(session && session.user ===  posts.name  ){ %>
                     <p><a href="<%= posts['id'] %>/edit">编辑</a></p>
                     <p><a class="delete_post">删除</a></p>
+                    <p><a class="star">点赞</a></p>
                     <% } %>
                 </div>
             </li>
@@ -157,6 +159,22 @@
                     }
                 })
             }
+        })
+        // 点赞
+        $('.edit .star').on('click',function(){
+            $.ajax({
+                    url: "<%= posts.id %>/star",
+                    type: "POST",
+                    cache: false,
+                    success: function (msg) {
+                        if (msg.type === 1) {
+                            $('.author span').eq(3).html('点赞数：'+msg.data)
+                        }
+                    },
+                    error: function () {
+                        alert('异常');
+                    }
+                })
         })
         // 删除评论
         function delete_comment(id) {

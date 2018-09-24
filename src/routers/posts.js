@@ -40,5 +40,8 @@ router.get('/posts/:postId/edit', controller.getEditPage)
 // post 编辑单篇文章
 router.post('/posts/:postId/edit', controller.postEditPage);
 
+// 点赞
+router.post('/posts/:postId/star', controller.postStar);
+
 
 module.exports = router;

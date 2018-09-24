@@ -122,7 +122,8 @@ exports.getSinglePosts = async ctx => {
     let comment_res,
         res,
         pageOne,
-        res_pv;
+        res_pv,
+        statCount;
     await userModel.findDataById(ctx.params.postId)
         .then(result => {
             res = result;
@@ -139,14 +140,17 @@ exports.getSinglePosts = async ctx => {
         .then(result => {
             comment_res = result;
         })
-
+    await userModel.getStarCount(ctx.params.postId)
+    .then(result => {
+        statCount = result[0]['star'];
+    })
     await ctx.render('sPost', {
         session: ctx.session,
         posts: res[0],
         commentLength: comment_res.length,
         commentPageLength: Math.ceil(comment_res.length / 10),
-        pageOne
-
+        pageOne,
+        statCount
     })
 }
 
@@ -283,4 +287,25 @@ exports.postEditPage = async ctx => {
         }).catch(() => {
             ctx.body = false
         })
+}
+
+// 点赞
+exports.postStar = async ctx =>{
+    // 获取文章点赞数并加1，然后更新文章点赞数
+    let currentStarCount;
+    await userModel.getStarCount(ctx.params.postId)
+    .then(result => {
+        currentStarCount = result[0]['star'];
+        currentStarCount+=1;
+    })
+    await userModel.updateStarCount(ctx.params.postId, currentStarCount)
+    .then(()=>{
+        ctx.body ={
+            type:1,
+            data: parseInt(currentStarCount)
+        }
+    })
+    .catch(error=>{
+        ctx.body = 0
+    })
 }

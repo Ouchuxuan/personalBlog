@@ -37,9 +37,9 @@ header .user_right{
     float: right
 }
 header .user_right .active{
-    color: #5FB878;
+    color: #cc0000;
     background: #fff;
-    border: 1px solid #5FB878;
+    border: 1px solid #cc0000;
     box-shadow: 0 5px 5px #ccc;
 }
 header .user_name {
@@ -53,7 +53,7 @@ header .user_name {
 .has_user span,
 .none_user a {
     padding: 5px 15px;
-    background: #5FB878;
+    background: #cc0000;
     border-radius: 15px;
     color: #fff;
     cursor: pointer;
@@ -62,9 +62,9 @@ header .user_name {
 }
 
 .has_user a:hover,.has_user span:hover{
-    color: #5FB878;
+    color: #cc0000;
     background: #fff;
-    border: 1px solid #5FB878;
+    border: 1px solid #cc0000;
     box-shadow: 0 5px 5px #ccc;
 }
 
@@ -129,6 +129,10 @@ header .user_name {
     margin: 10px 0 0 0 ;
     padding: 10px 0;
     margin-left: 40px;
+    overflow: hidden;
+}
+.posts .content p{
+    white-space:wrap;
 }
 .userMsg img{
     width: 40px;
@@ -160,6 +164,7 @@ header .user_name {
 .spost .edit p {
     display: inline-block;
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .comment_wrap {
@@ -174,7 +179,7 @@ header .user_name {
     line-height: 40px;
     text-align: center;
     border-radius: 4px;
-    background: #5FB878;
+    background: #cc0000;
     cursor: pointer;
     color: #fff;
     float: left;
@@ -183,8 +188,8 @@ header .user_name {
 }
 .submit:hover{
     background: #fff;
-    color: #5FB878;
-    border:1px solid #5FB878;
+    color: #cc0000;
+    border:1px solid #cc0000;
 }
 .comment_list{
     border: 1px solid #ddd;

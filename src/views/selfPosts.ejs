@@ -4,9 +4,10 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res.name %>"><a href="/posts?author=<%= res.name %> ">author: <%= res.name %></a></span>
+						<span title="<%= res.name %>"><a href="/posts?author=<%= res.name %> ">作者: <%= res.name %></a></span>
 						<span>评论数：<%= res.comments %></span>
 						<span>浏览量：<%= res.pv %></span>
+						<span>点赞数：0</span>
 					</div>
 					<div class="comment_pv">
 						<span><%= res.moment %></span>

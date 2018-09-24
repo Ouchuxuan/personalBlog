@@ -47,8 +47,10 @@ const posts = `create table if not exists posts(
      comments VARCHAR(200) NOT NULL DEFAULT '0',
      pv VARCHAR(40) NOT NULL DEFAULT '0',
      avator VARCHAR(100) NOT NULL,
+     star INT(32) NOT NULL DEFAULT '0',
      PRIMARY KEY (id)
- );`
+ );
+ `
 
 const comment = `create table if not exists comment(
      id INT NOT NULL AUTO_INCREMENT,
@@ -60,6 +62,13 @@ const comment = `create table if not exists comment(
      PRIMARY KEY (id)
  );`
 
+ const stars = `create table if not exists star(
+    id INT NOT NULL AUTO_INCREMENT,
+    moment VARCHAR(40) NOT NULL,
+    postid VARCHAR(40) NOT NULL,
+    PRIMARY KEY (id)
+ )`
+
 const createTable = sql => {
     return query(sql, [])
 }
@@ -68,6 +77,7 @@ const createTable = sql => {
 createTable(users)
 createTable(posts)
 createTable(comment)
+createTable(stars)
 
 // 注册用户
 const insertData = value => {
@@ -182,6 +192,24 @@ const deletePost = id => {
     return query(_sql)
 }
 
+//获取文章点赞数
+const getStarCount = id => {
+    const _sql = `select star from posts where id=${id};`;
+    return query(_sql);
+}
+// 点赞
+const postStar = (value) => {
+    const _sql = `insert into star set moment=?,postid=?;`;
+    return query(_sql);
+}
+
+// 更新文章点赞数
+const updateStarCount = (id,value) => {
+    const _sql = `update posts set star=${value} where id=${id};`;
+    return query(_sql)
+}
+
+
 
 
 
@@ -206,5 +234,8 @@ module.exports = {
     findCommentLength,
     findPageById,
     updatePost,
-    deletePost
+    deletePost,
+    getStarCount,
+    postStar,
+    updateStarCount
 }
