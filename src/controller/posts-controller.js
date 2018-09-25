@@ -290,6 +290,8 @@ exports.postEditPage = async ctx => {
 
 // 点赞
 exports.postStar = async ctx => {
+    // 获取用户名
+    const userName = ctx.request.body.name;
     // 获取文章点赞数并加1，然后更新文章点赞数
     let currentStarCount,
         time = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -298,7 +300,8 @@ exports.postStar = async ctx => {
             currentStarCount = result[0]['star'];
             currentStarCount += 1;
         })
-    // await userModel.postStar([time,ctx.params.postId,])
+    await userModel.postStar([time,ctx.params.postId,userName,'1']);
+    // await userModel.postStar(['1','1','1','1']);
     await userModel.updateStarCount(ctx.params.postId, currentStarCount)
         .then(() => {
             ctx.body = {

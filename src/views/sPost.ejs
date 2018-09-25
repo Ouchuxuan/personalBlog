@@ -166,6 +166,9 @@
                     url: "<%= posts.id %>/star",
                     type: "POST",
                     cache: false,
+                    data:{
+                        name:'<%= session.user %>'
+                    },
                     success: function (msg) {
                         if (msg.type === 1) {
                             $('.author span').eq(3).html('点赞数：'+msg.data)

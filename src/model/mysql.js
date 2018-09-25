@@ -62,11 +62,11 @@ const comment = `create table if not exists comment(
      PRIMARY KEY (id)
  );`
 
- const stars = `create table if not exists star(
+const stars = `create table if not exists star(
     id INT NOT NULL AUTO_INCREMENT,
     moment VARCHAR(40) NOT NULL,
     postid VARCHAR(40) NOT NULL,
-    userid VARCHAR(40) NOT NULL,
+    username VARCHAR(40) NOT NULL,
     status VARCHAR(8) NOT NULL,
     PRIMARY KEY (id)
  );`
@@ -200,13 +200,13 @@ const getStarCount = id => {
     return query(_sql);
 }
 // 点赞
-const postStar = (value) => {
-    const _sql = `insert into star set moment=?,postid=?userid=?status=?;`;
+const postStar = value => {
+    const _sql = `insert  into 'star' set moment = ?, postid =?, username=?, status = ?`;
     return query(_sql);
 }
 
 // 更新文章点赞数
-const updateStarCount = (id,value) => {
+const updateStarCount = (id, value) => {
     const _sql = `update posts set star=${value} where id=${id};`;
     return query(_sql)
 }
