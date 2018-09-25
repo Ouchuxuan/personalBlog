@@ -201,14 +201,20 @@ const getStarCount = id => {
 }
 // 点赞
 const postStar = value => {
-    const _sql = `insert  into 'star' set moment = ?, postid =?, username=?, status = ?`;
-    return query(_sql);
+    const _sql = `insert  into star set moment = ?, postid =?, username=?, status = ?`;
+    return query(_sql,value);
 }
 
 // 更新文章点赞数
 const updateStarCount = (id, value) => {
     const _sql = `update posts set star=${value} where id=${id};`;
     return query(_sql)
+}
+
+// 查询用户在某篇文章中的点赞情况
+const getStarStatus = (userName, postId) => {
+    const _sql = `select status from star where username = '${userName}' and postid = ${postId};`;
+    return query(_sql);
 }
 
 
@@ -239,5 +245,6 @@ module.exports = {
     deletePost,
     getStarCount,
     postStar,
-    updateStarCount
+    updateStarCount,
+    getStarStatus
 }

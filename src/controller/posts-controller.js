@@ -294,14 +294,30 @@ exports.postStar = async ctx => {
     const userName = ctx.request.body.name;
     // 获取文章点赞数并加1，然后更新文章点赞数
     let currentStarCount,
+        starStatus,
         time = moment().format('YYYY-MM-DD HH:mm:ss');
     await userModel.getStarCount(ctx.params.postId)
         .then(result => {
             currentStarCount = result[0]['star'];
-            currentStarCount += 1;
         })
-    await userModel.postStar([time,ctx.params.postId,userName,'1']);
-    // await userModel.postStar(['1','1','1','1']);
+    // 从表star中查询该用户在该文章中的点赞情况
+    await userModel.getStarStatus(userName, ctx.params.postId)
+        .then(async result => {
+            console.log(result);
+            const resLength = result.length;
+            starStatus = result[resLength-1]['status'];
+            if (starStatus === '0') {
+                //点赞数+1
+                currentStarCount += 1;
+                // 写入star表
+                await userModel.postStar([time, ctx.params.postId, userName, '1']);
+            } else {
+                currentStarCount -= 1;
+                // 写入star表
+                await userModel.postStar([time, ctx.params.postId, userName, '0']);
+            }
+        })
+    // 更新posts表
     await userModel.updateStarCount(ctx.params.postId, currentStarCount)
         .then(() => {
             ctx.body = {
