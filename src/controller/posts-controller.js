@@ -13,15 +13,15 @@ exports.getPosts = async ctx => {
     let res,
         postsLength,
         name = decodeURIComponent(ctx.request.querystring.split('=')[1]);
-    
+
 
     if (ctx.request.querystring) {
         await userModel.findDataByName(name)
             .then(result => {
                 postsLength = result.length;
-               
+
             })
-        await userModel.findPostByUserPage(name,1)
+        await userModel.findPostByUserPage(name, 1)
             .then(result => {
                 res = result;
             })
@@ -141,9 +141,9 @@ exports.getSinglePosts = async ctx => {
             comment_res = result;
         })
     await userModel.getStarCount(ctx.params.postId)
-    .then(result => {
-        statCount = result[0]['star'];
-    })
+        .then(result => {
+            statCount = result[0]['star'];
+        })
     await ctx.render('sPost', {
         session: ctx.session,
         posts: res[0],
@@ -225,7 +225,6 @@ exports.postDeleteComment = async ctx => {
 
 // 删除单篇文章
 exports.postDeletePost = async ctx => {
-    console.log(000000000);
     let postId = ctx.params.postId;
     await userModel.deleteAllPostComment(postId);
     await userModel.deletePost(postId)
@@ -233,7 +232,7 @@ exports.postDeletePost = async ctx => {
             ctx.body = {
                 data: 1
             }
-        }) 
+        })
         .catch(error => {
             ctx.body = {
                 data: 2
@@ -290,22 +289,24 @@ exports.postEditPage = async ctx => {
 }
 
 // 点赞
-exports.postStar = async ctx =>{
+exports.postStar = async ctx => {
     // 获取文章点赞数并加1，然后更新文章点赞数
-    let currentStarCount;
+    let currentStarCount,
+        time = moment().format('YYYY-MM-DD HH:mm:ss');
     await userModel.getStarCount(ctx.params.postId)
-    .then(result => {
-        currentStarCount = result[0]['star'];
-        currentStarCount+=1;
-    })
+        .then(result => {
+            currentStarCount = result[0]['star'];
+            currentStarCount += 1;
+        })
+    // await userModel.postStar([time,ctx.params.postId,])
     await userModel.updateStarCount(ctx.params.postId, currentStarCount)
-    .then(()=>{
-        ctx.body ={
-            type:1,
-            data: parseInt(currentStarCount)
-        }
-    })
-    .catch(error=>{
-        ctx.body = 0
-    })
+        .then(() => {
+            ctx.body = {
+                type: 1,
+                data: parseInt(currentStarCount)
+            }
+        })
+        .catch(error => {
+            ctx.body = 0
+        })
 }

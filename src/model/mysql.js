@@ -66,8 +66,10 @@ const comment = `create table if not exists comment(
     id INT NOT NULL AUTO_INCREMENT,
     moment VARCHAR(40) NOT NULL,
     postid VARCHAR(40) NOT NULL,
+    userid VARCHAR(40) NOT NULL,
+    status VARCHAR(8) NOT NULL,
     PRIMARY KEY (id)
- )`
+ );`
 
 const createTable = sql => {
     return query(sql, [])
@@ -199,7 +201,7 @@ const getStarCount = id => {
 }
 // 点赞
 const postStar = (value) => {
-    const _sql = `insert into star set moment=?,postid=?;`;
+    const _sql = `insert into star set moment=?,postid=?userid=?status=?;`;
     return query(_sql);
 }
 
