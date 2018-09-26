@@ -303,7 +303,6 @@ exports.postStar = async ctx => {
     // 从表star中查询该用户在该文章中的点赞情况
     await userModel.getStarStatus(userName, ctx.params.postId)
         .then(async result => {
-            console.log(result);
             const resLength = result.length;
             starStatus = result[resLength-1]['status'];
             if (starStatus === '0') {

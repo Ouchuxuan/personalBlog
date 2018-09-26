@@ -19,25 +19,25 @@
             },1500)
         }
         $(function(){
-            $('.signout').click(()=>{
-                $.ajax({
-                    url: "/signout",
-                    type: "GET",
-                    cache: false,
-                    dataType: 'json',
-                    success: function (msg) {
-                        if (msg) {
-                            fade('登出成功')
-                            setTimeout(()=>{
-                                window.location.href = "/posts"
-                            },1500) 
-                        }
-                    },
-                    error: function () {
-                        alert('异常');
-                    }
-                })
-            })
+            // $('.signout').click(()=>{
+            //     $.ajax({
+            //         url: "/signout",
+            //         type: "GET",
+            //         cache: false,
+            //         dataType: 'json',
+            //         success: function (msg) {
+            //             if (msg) {
+            //                 fade('登出成功')
+            //                 setTimeout(()=>{
+            //                     window.location.href = "/posts"
+            //                 },1500) 
+            //             }
+            //         },
+            //         error: function () {
+            //             alert('异常');
+            //         }
+            //     })
+            // })
         })
     </script>
 </head>
@@ -72,7 +72,10 @@
                         <a href="/create">发表文章</a>
                     <% }%>
 
-                    <span class="signout">登出</span>
+                    <div class="signout user-info">
+                   <span>个人信息</span>
+                    
+                    </div>
                 </div>
             <% } %>
             <% if(!session.user){ %>

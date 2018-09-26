@@ -47,11 +47,11 @@ exports.postSignUp = async ctx => {
                 data:2
             } 
         }else{
-            const base64Data = avator.replace(/^data:image\/\w+;bsae64,/,'');
+            const base64Data = avator.replace(/^data:image\/\w+;base64,/,'');
             const dataBuffer = new Buffer(base64Data, 'base64');
             const getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now();
             const upload = await new Promise((resolve, reject) => {
-                fs.writeFile('./src/public/images/' + getName + '.jpg', dataBuffer, err => {
+                fs.writeFile('./src/public/images/' + getName + '.png', dataBuffer, err => {
                     if(err){
                         throw err;
                         reject(false);

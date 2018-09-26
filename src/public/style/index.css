@@ -26,7 +26,9 @@ a {
 
 header {
     width: 60%;
-    margin: 20px auto;
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 header:after{
     content: '';
@@ -50,7 +52,7 @@ header .user_name {
 }
 
 .has_user a,
-.has_user span,
+.has_user .user-info,
 .none_user a {
     padding: 5px 15px;
     background: #cc0000;
@@ -61,13 +63,28 @@ header .user_name {
     transition: all 0.3s;
 }
 
-.has_user a:hover,.has_user span:hover{
+.has_user a:hover {
     color: #cc0000;
     background: #fff;
     border: 1px solid #cc0000;
     box-shadow: 0 5px 5px #ccc;
 }
-
+.has_user .user-info{
+    width: 66px;
+    display: inline-block;
+}
+.has_user .user-info span{
+    color: #fff;
+}
+.has_user .user-info:hover{
+    color: #cc0000;
+    background: #fff;
+    border: 1px solid #cc0000;
+    box-shadow: 0 5px 5px #ccc;
+}
+.has_user .user-info:hover span{
+    color: #cc0000;
+}
 .posts{
     border-radius: 4px; 
     border: 1px solid #ddd;
