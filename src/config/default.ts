@@ -12,6 +12,6 @@ const config = {
     }
 }
 
-//参考：https://blog.csdn.net/wclimb/article/details/77890793
+//参考：https://blog.csdn.net/wclimb/article/details/7789079356566
 
-module.exports = config
+export default config;
