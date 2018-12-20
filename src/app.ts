@@ -1,6 +1,5 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
-
+import { createConnection } from  'typeorm';
 import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import * as  KoaCors from "koa2-cors";

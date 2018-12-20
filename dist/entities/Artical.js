@@ -13,33 +13,41 @@ const typeorm_1 = require("typeorm");
 let User = class User {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn('uuid'),
+    typeorm_1.PrimaryGeneratedColumn("uuid"),
     __metadata("design:type", String)
-], User.prototype, "id", void 0);
+], User.prototype, "artical_id", void 0);
 __decorate([
-    typeorm_1.Column({
-        type: 'varchar',
-        length: 200,
-        nullable: false,
-    }),
+    typeorm_1.Column({ type: "varchar", length: 200, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], User.prototype, "title", void 0);
 __decorate([
-    typeorm_1.Column({
-        type: 'varchar',
-        length: 200,
-        nullable: false,
-    }),
+    typeorm_1.Column({ type: "varchar", length: 255, nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "loginname", void 0);
+], User.prototype, "description", void 0);
 __decorate([
-    typeorm_1.Column({ type: "int", width: 64 }),
+    typeorm_1.Column({ type: "blob" }),
+    __metadata("design:type", String)
+], User.prototype, "content", void 0);
+__decorate([
+    typeorm_1.Column({ type: "bigint", default: 0 }),
     __metadata("design:type", Number)
-], User.prototype, "phone", void 0);
+], User.prototype, "likes", void 0);
 __decorate([
-    typeorm_1.Column("varchar", { length: 255 }),
+    typeorm_1.Column({ type: "varchar" }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], User.prototype, "images", void 0);
+__decorate([
+    typeorm_1.Column({ type: "varchar", nullable: false }),
+    __metadata("design:type", String)
+], User.prototype, "user_id", void 0);
+__decorate([
+    typeorm_1.Column({ type: "bigint", default: 0 }),
+    __metadata("design:type", Number)
+], User.prototype, "read_num", void 0);
+__decorate([
+    typeorm_1.Column({ type: "varchar", length: 64 }),
+    __metadata("design:type", String)
+], User.prototype, "author", void 0);
 __decorate([
     typeorm_1.Column({ type: "tinyint", default: false }),
     __metadata("design:type", Boolean)
@@ -48,4 +56,4 @@ User = __decorate([
     typeorm_1.Entity()
 ], User);
 exports.User = User;
-//# sourceMappingURL=User.js.map
+//# sourceMappingURL=Artical.js.map

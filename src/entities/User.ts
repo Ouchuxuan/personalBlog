@@ -1,30 +1,32 @@
 
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({
-      length: 100,
+      type: 'varchar',
+      length: 200,
+      nullable: false,
     })
     username: string;
 
     @Column({
-      length:100,
+      type: 'varchar',
+      length: 200,
+      nullable: false,
     })
     loginname: string;
 
-    @Column()
+    @Column({ type: "int", width: 64 })
     phone: number;
 
-    @Column({
-      length:200,
-    })
+    @Column("varchar", { length: 255 })
     email: string;
 
-    @Column()
-    isDel: boolean;
+    @Column({type: "tinyint", default: false})
+    is_delete: boolean;
 }
