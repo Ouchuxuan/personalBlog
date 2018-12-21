@@ -1,13 +1,14 @@
 import "reflect-metadata";
+import { createKoaServer } from 'routing-controllers'
 import { createConnection } from  'typeorm';
-import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import * as  KoaCors from "koa2-cors";
-import router from "./routes";
 import appConfig from "./config/config.default";
 import * as KoaLogger from 'koa-logger';
 
-const app = new Koa();
+const app = createKoaServer({
+  controllers: [`${__dirname}/controllers/**/*{.js,.ts}`],
+})
 
 createConnection()
   .then(async () => {
@@ -25,7 +26,6 @@ createConnection()
           allowHeaders: ["Content-Type", "Authorization", "Accept"] 
     }))
     app.use(bodyParser());
-    app.use(router.routes()).use(router.allowedMethods());
     app.use(KoaLogger());
     app.listen(appConfig.port);
     console.log(`Server running on port ${appConfig.port}`);

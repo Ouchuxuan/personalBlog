@@ -10,47 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Artical_1 = require("./Artical");
-let User = class User {
+let Category = class Category {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn("uuid"),
     __metadata("design:type", String)
-], User.prototype, "id", void 0);
+], Category.prototype, "c_id", void 0);
 __decorate([
-    typeorm_1.Column({
-        type: "varchar",
-        length: 200,
-        nullable: false
-    }),
+    typeorm_1.Column({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], Category.prototype, "c_name", void 0);
 __decorate([
-    typeorm_1.Column({
-        type: "varchar",
-        length: 200,
-        nullable: false
-    }),
+    typeorm_1.Column({ type: "varchar", length: 200, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "loginname", void 0);
-__decorate([
-    typeorm_1.Column({ type: "int", width: 64 }),
-    __metadata("design:type", Number)
-], User.prototype, "phone", void 0);
-__decorate([
-    typeorm_1.Column("varchar", { length: 255 }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    typeorm_1.Column({ type: "tinyint", default: false }),
-    __metadata("design:type", Boolean)
-], User.prototype, "is_delete", void 0);
-__decorate([
-    typeorm_1.OneToMany(type => Artical_1.Artical, artical => artical.user),
-    __metadata("design:type", Array)
-], User.prototype, "articals", void 0);
-User = __decorate([
+], Category.prototype, "c_description", void 0);
+Category = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=User.js.map
+], Category);
+exports.Category = Category;
+//# sourceMappingURL=Category.js.map

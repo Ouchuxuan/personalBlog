@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
+const routing_controllers_1 = require("routing-controllers");
 const typeorm_1 = require("typeorm");
-const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 const KoaCors = require("koa2-cors");
-const routes_1 = require("./routes");
 const config_default_1 = require("./config/config.default");
 const KoaLogger = require("koa-logger");
-const app = new Koa();
+const app = routing_controllers_1.createKoaServer({
+    controllers: [`${__dirname}/controllers/**/*{.js,.ts}`],
+});
 typeorm_1.createConnection()
     .then(async () => {
     app.use(KoaCors({
@@ -25,7 +26,6 @@ typeorm_1.createConnection()
         allowHeaders: ["Content-Type", "Authorization", "Accept"]
     }));
     app.use(bodyParser());
-    app.use(routes_1.default.routes()).use(routes_1.default.allowedMethods());
     app.use(KoaLogger());
     app.listen(config_default_1.default.port);
     console.log(`Server running on port ${config_default_1.default.port}`);

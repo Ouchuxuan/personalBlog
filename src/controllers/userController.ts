@@ -1,15 +1,31 @@
-import UserService from '../services/userService';
-import { Context } from 'koa';
+import {Controller, Param, Body, Get, Post, Put, Delete} from "routing-controllers";
 
-class UserController {
-  public static async getAllUsers (ctx: Context) {
-    const result = await UserService.UsersListAction();
-    ctx.body = '1112ssssss2111';
-    
-  }
-  public static async testCors(ctx: Context){
-    ctx.body = 'jadkssssssssf';
-  }
+@Controller()
+export class UserController {
+
+    @Get("/users")
+    getAll() {
+       return "This action returns all users";
+    }
+
+    @Get("/users/:id")
+    getOne(@Param("id") id: number) {
+       return "This action returns user #" + id;
+    }
+
+    @Post("/users")
+    post(@Body() user: any) {
+       return "Saving user...";
+    }
+
+    @Put("/users/:id")
+    put(@Param("id") id: number, @Body() user: any) {
+       return "Updating a user...";
+    }
+
+    @Delete("/users/:id")
+    remove(@Param("id") id: number) {
+       return "Removing user...";
+    }
+
 }
-
-export default UserController;
