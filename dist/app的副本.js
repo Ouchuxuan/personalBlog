@@ -28,10 +28,10 @@ typeorm_1.createConnection()
         allowHeaders: ["Content-Type", "Authorization", "Accept"]
     }));
     app.use(bodyParser());
-    app.use(koaStatic(path.join(__dirname, config_default_1.default.staticPath)));
+    app.use(koaStatic(path.join(__dirname, '/public')));
     app.use(KoaLogger());
     app.listen(config_default_1.default.port);
     console.log(`Server running on port ${config_default_1.default.port}`);
 })
     .catch(error => console.log("TypeORM connection error: ", error));
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=app的副本.js.map
